@@ -1,0 +1,96 @@
+<div class="ticket">
+  <div class="ticket__way">
+    <img [ngSrc]="image" alt="airplane-mode" height="24" width="24" />
+    <span>{{ searchFrom }} to {{ searchTo }} </span>
+  </div>
+  <div class="slider" *ngIf="isSliderVisible">
+    <mat-tab-group
+      (selectedTabChange)="onTabChange($event)"
+      (click)="changeFlightsVisibility()"
+      [ngClass]="
+        data.seats >= 50
+          ? 'green-border'
+          : data.seats <= 10
+          ? 'red-border'
+          : 'yellow-border'
+      "
+    >
+      <mat-tab
+        *ngFor="let date of dates; let i = index"
+        [disabled]="ticketsData[i].price.EUR === ''"
+      >
+        <ng-template mat-tab-label>
+          <div class="slider__label">
+            <span class="slider__date">{{ date | date : "d MMM" }}</span>
+            <span class="slider__week">{{ date | date : "EEEE" }}</span>
+            <ng-container
+              *ngIf="ticketsData[i].price[currency] !== ''; else airSvg"
+            >
+              <span class="slider__money">{{
+                ticketsData[i].price[currency]
+              }}</span>
+            </ng-container>
+          </div>
+        </ng-template>
+        <ng-template #airSvg>
+          <img
+            class="slider__svg"
+            ngSrc="assets/images/svg/Icon_air.svg"
+            alt="airplane-mode"
+            height="24"
+            width="24"
+          />
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div class="select" *ngIf="isFlightVisible">
+    <div class="date">
+      <span class="date__week">{{ data.date | date : "EEE, d MMM y" }}</span>
+      <div class="date__time">
+        <span class="date__time-hours">{{ data.departureTimeFrom }}</span>
+        <span class="date__time-utc">UTC +0</span>
+      </div>
+      <span class="date__from">{{ searchFrom }}</span>
+    </div>
+    <div class="air-time">
+      <span class="air-time__line"></span>
+      <div class="air-time__info">
+        <span>{{ data.arrivalTime }}</span>
+        <img [ngSrc]="imageTimeTravel" alt="air" height="24" width="45" />
+        <span>Direct</span>
+      </div>
+      <span class="air-time__line"></span>
+    </div>
+    <div class="date">
+      <span class="date__week">{{ data.date | date : "EEE, d MMM y" }}</span>
+      <div class="date__time">
+        <span class="date__time-utc">UTC +1</span>
+        <span class="date__time-hours">{{ data.departureTimeTo }}</span>
+      </div>
+      <span class="date__from float-right">{{ searchTo }}</span>
+    </div>
+    <span class="select__flight">Flight no.</span>
+    <span class="select__FR">{{ data.flightCode }}</span>
+    <div class="seats">
+      <span
+        class="seats__available"
+        [ngClass]="
+          data.seats >= 50 ? 'green' : data.seats <= 10 ? 'red' : 'yellow'
+        "
+        >{{ data.seats }} seats <br />
+        available</span
+      >
+      <span class="seats__text">Price</span>
+      <span class="seats__price">{{ data.price[currency] }}</span>
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="dispatchTicketsAndChangeVisible()"
+      class="select__button"
+    >
+      {{ isSliderVisible === true ? "Select" : "Edit" }}
+    </button>
+  </div>
+</div>

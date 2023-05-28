@@ -1,0 +1,43 @@
+<div class="destination-select" [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>From</mat-label>
+    <mat-select
+      [formControl]="formControlFrom"
+      (selectionChange)="onSelectionChangeFrom($event.value)"
+    >
+      <mat-select-trigger>{{ formControlFrom.value }}</mat-select-trigger>
+      <mat-option
+        *ngFor="let city of citiesList"
+        [value]="city.name"
+        [disabled]="city.name === formControlTo.value"
+      >
+        <app-city-option [city]="city"></app-city-option>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>To</mat-label>
+    <mat-select
+      [formControl]="formControlTo"
+      (selectionChange)="onSelectionChangeTo($event.value)"
+    >
+      <mat-select-trigger>{{ formControlTo.value }}</mat-select-trigger>
+      <mat-option
+        *ngFor="let city of citiesList"
+        [value]="city.name"
+        [disabled]="city.name === formControlFrom.value"
+      >
+        <app-city-option [city]="city"></app-city-option>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button
+    class="destination-select__btn"
+    type="button"
+    (click)="changeDirection()"
+    *ngIf="isReverseButton"
+    [disabled]="isReverseButtonDisabled"
+  >
+    <img src="assets/images/svg/reverse.svg" alt="Reverse Icon" />
+  </button>
+</div>

@@ -1,0 +1,59 @@
+:host {
+  ::ng-deep {
+    .mat-mdc-button-touch-target {
+      top: 0;
+    }
+
+    .mat-button-toggle, .mat-button-toggle-checked {
+      flex: 1;
+    }
+
+    .mat-button-toggle-group {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.signup {
+  &-wrapper {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+
+    .form__row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .form__agreement {
+      margin-bottom: 20px;
+    }
+
+    a {
+      font-weight: bold;
+      color: #11397e;
+    }
+  }
+}
+
+.error-message {
+  background-color: lightpink;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+fieldset {
+  border: none;
+  border-top: 1px solid #000;
+
+  legend {
+    text-align: center;
+  }
+}

@@ -1,0 +1,130 @@
+:host {
+  width: 100%;
+  background: #F1F3F6;
+  margin-top: 97px;
+  ::ng-deep{
+    .mat-mdc-raised-button:not(:disabled) {
+      background-color: #11397E;
+      border-radius: 4px;
+      width: 126px;
+      height: 60px;
+      box-shadow: none;
+    }
+
+    .mat-mdc-button:not(:disabled) {
+      color: #11397E;
+      width: 180px;
+      margin: 0 20px;
+      height: 60px;
+      &.add-new{
+        width: 121px;
+        height: 28px;
+        background: #F4F6F9;
+        border-radius: 4px;
+      }
+    }
+
+    .mdc-data-table__header-row{
+      background-color: #F5F5F5;
+    }
+
+    .mat-mdc-header-cell{
+      font-size: 18px;
+      line-height: 20px;
+    }
+    .mat-mdc-table{
+      box-shadow: none;
+    }
+
+    .mat-mdc-cell{
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 32px;
+      align-items: center;
+      letter-spacing: 0.5px;
+    }
+
+    .mat-mdc-table .mdc-data-table__row{
+      height: 130px;
+    }
+  }
+}
+.cart{
+  margin-top: 40px;
+  background: #FFFFFF;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.cart-buttons{
+  text-align: right;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 0 35px 39px 0;
+}
+
+.title{
+  padding: 20px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  color: #11397E;
+}
+
+.flight-number{
+  font-size: 20px;
+  line-height: 24px;
+  color: #0090BD;
+  font-weight: 700;
+}
+
+.price{
+  color: #7F8906;
+}
+
+.edit{
+  padding-right: 36px;
+}
+
+.add-new{
+  color: #11397E;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+}
+
+.total{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 36px;
+  padding: 40px 0;
+  border-top: 1px solid #E1E5EB;
+  border-bottom: 1px solid #E1E5EB;
+}
+
+.total-info{
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  color: #000;
+  span{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+    align-items: center;
+    text-align: right;
+    background: linear-gradient(90deg, #11397E 0%, #005ABC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    margin-left: 20px;
+  }
+}
+
+.flight{
+  width: 200px;
+}

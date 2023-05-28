@@ -1,0 +1,14 @@
+<div class="counter">
+  <div class="counter__label" #ref>
+    <ng-content></ng-content>
+  </div>
+  <div class="counter__actions" [ngClass]="{ center: !ref.children.length }">
+    <button mat-icon-button (click)="increment()">
+      <mat-icon color="primary">add</mat-icon>
+    </button>
+    <div>{{ counter }}</div>
+    <button mat-icon-button (click)="decrement()" [disabled]="!counter">
+      <mat-icon color="primary">remove</mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="edit">
+  <div class="edit__way">
+    <span>{{ searchData.from }}</span>
+    <img
+      ngSrc="assets/images/svg/return_trip.svg"
+      alt="return_trip"
+      height="24"
+      width="24"
+    />
+    <span>{{ searchData.to }}</span>
+  </div>
+  <div class="edit__return">
+    <span>Return</span>
+    <span class="edit__return-badge"></span>
+    <span>{{ searchData.dateStart | date : "d MMM" }}</span>
+    <span *ngIf="searchData.way === '2'">
+      -
+      {{ searchData.dateEnd | date : "d MMM" }}
+    </span>
+    <span class="edit__return-badge"></span>
+    <span>{{ convertPassengers() }} </span>
+    <img
+      ngSrc="assets/images/svg/account.svg"
+      alt="account"
+      height="16"
+      width="16"
+    />
+  </div>
+  <button
+    mat-button
+    color="primary"
+    class="edit__button"
+    (click)="onEditClick()"
+  >
+    Edit
+  </button>
+</div>
+<div class="container edit__form" *ngIf="isEditFormVisible">
+  <ng-container *ngTemplateOutlet="editForm"></ng-container>
+</div>
+
+<ng-template #editForm>
+  <app-destination-select [form]="editFlightForm"></app-destination-select>
+
+  <app-destination-info
+    [form]="editFlightForm"
+    [isMultipleWay]="isMultipleWay()"
+  ></app-destination-info>
+</ng-template>

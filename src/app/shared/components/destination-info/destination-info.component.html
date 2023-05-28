@@ -1,0 +1,53 @@
+<div class="destination-info">
+  <ng-container
+    *ngTemplateOutlet="isMultipleWay ? multipleWay : singleWay"
+  ></ng-container>
+  <mat-form-field
+    appearance="outline"
+    cdkOverlayOrigin
+    #target="cdkOverlayOrigin"
+  >
+    <mat-label>Passengers</mat-label>
+    <app-passengers-picker
+      [targetElement]="target"
+      [passengersControl]="passengersControl"
+      (controlClosed)="writePassengers($event)"
+    ></app-passengers-picker>
+  </mat-form-field>
+</div>
+
+<ng-template #multipleWay>
+  <mat-form-field appearance="outline">
+    <mat-label>Dates</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input
+        matStartDate
+        placeholder="Start date"
+        [value]="startDate"
+        (dateChange)="onDateChange($event, 'startDate')"
+      />
+      <input
+        matEndDate
+        placeholder="End date"
+        [value]="endDate"
+        (dateChange)="onDateChange($event, 'endDate')"
+      />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #singleWay>
+  <mat-form-field appearance="outline">
+    <mat-label>Date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [value]="startDate"
+      (dateChange)="onDateChange($event, 'startDate')"
+    />
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</ng-template>

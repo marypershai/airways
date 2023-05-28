@@ -1,0 +1,42 @@
+<div class="login-wrapper">
+  <app-social-buttons (buttonClicked)="prefillData()"></app-social-buttons>
+
+  <fieldset>
+    <legend>or log in with your email</legend>
+  </fieldset>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmitForm()" class="login__form">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="login" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" #password />
+      <button
+        *ngIf="loginForm.controls.password.value"
+        matSuffix
+        mat-icon-button
+        type="button"
+        (click)="showHidePassword(password)"
+      >
+        <mat-icon>visibility</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <a routerLink="#" class="form__forgot-password">Forgot password?</a>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!loginForm.valid"
+    >
+      Login
+    </button>
+  </form>
+</div>

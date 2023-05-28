@@ -1,0 +1,135 @@
+<div class="container">
+  <div class="cart">
+    <h2 class="title">Cart</h2>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+      *ngIf="basket[0].flights.length > 0; else void"
+    >
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)"
+            color="primary"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="flightCode">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element" class="flight-number">
+          {{ element.flights[0].flightCode }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="flight">
+        <th mat-header-cell *matHeaderCellDef class="flight">Flight</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.search.from }} - {{ element.search.to }} <br />
+          <ng-container *ngIf="element.search.way === 2"
+            >{{ element.search.to }} - {{ element.search.from }}</ng-container
+          >
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="typeTrip">
+        <th mat-header-cell *matHeaderCellDef>Type Trip</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.search.way === '1'"
+            >One way</ng-container
+          >
+          <ng-container *ngIf="element.search.way === '2'"
+            >Round Trip</ng-container
+          >
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dataTime">
+        <th mat-header-cell *matHeaderCellDef>Data & Time</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container>
+            {{ element.flights[0].date | date : "d MMMM, y," }}
+            {{ element.flights[0].departureTimeFrom }} —
+            {{ element.flights[0].departureTimeTo }}</ng-container
+          >
+          <ng-container>
+            {{ element.flights[1].date | date : "d MMMM, y," }}
+            {{ element.flights[1].departureTimeFrom }} —
+            {{ element.flights[1].departureTimeTo }}</ng-container
+          >
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="passengers">
+        <th mat-header-cell *matHeaderCellDef>Passengers</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.search.passengers.adult !== 0"
+            >{{ element.search.passengers.adult }} x Adult
+          </ng-container>
+          <ng-container *ngIf="element.search.passengers.child !== 0"
+            >{{ element.search.passengers.child }} x Child
+          </ng-container>
+          <ng-container *ngIf="element.search.passengers.infant !== 0"
+            >{{ element.search.passengers.infant }} x Infant
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let element" class="price">
+          {{ currency }}{{ totalSum.toFixed(2) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" class="edit">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <span>Delete</span>
+            </button>
+            <button mat-menu-item>
+              <span>Edit</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="selection.toggle(row)"
+      >
+        >
+      </tr>
+    </table>
+
+    <div class="total">
+      <button class="add-new" mat-button color="primary">+ Add new trip</button>
+      <div class="total-info">
+        <p>Total <span>€572.34</span></p>
+      </div>
+    </div>
+    <div class="cart-buttons">
+      <button mat-button color="primary">Return to Account</button>
+      <button mat-raised-button color="primary" type="submit">Continue</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #void>Not Found</ng-template>

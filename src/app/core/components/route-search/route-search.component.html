@@ -1,0 +1,34 @@
+<div class="route-search">
+  <div class="container">
+    <form
+      class="search-form"
+      [formGroup]="searchForm"
+      (ngSubmit)="onSubmitForm()"
+    >
+      <mat-radio-group color="primary" [formControl]="searchForm.controls.way">
+        <mat-radio-button value="2">Round Trip</mat-radio-button>
+        <mat-radio-button value="1">One Way</mat-radio-button>
+      </mat-radio-group>
+
+      <app-destination-select
+        [isReverseButton]="true"
+        [form]="searchForm"
+      ></app-destination-select>
+
+      <app-destination-info
+        [isMultipleWay]="isMultipleWay()"
+        [form]="searchForm"
+      ></app-destination-info>
+
+      <button
+        type="submit"
+        class="search-form__btn"
+        mat-raised-button
+        color="primary"
+        [disabled]="searchForm.invalid"
+      >
+        Search
+      </button>
+    </form>
+  </div>
+</div>

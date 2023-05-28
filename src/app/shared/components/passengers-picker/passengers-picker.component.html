@@ -1,0 +1,43 @@
+<div class="passenger-picker" [formGroup]="form">
+  <input
+    class="passenger-picker__input"
+    (focusin)="onFocusIn()"
+    (focusout)="onFocusOut($event)"
+    formControlName="passengers"
+  />
+  <mat-icon>{{ arrowIcon }}</mat-icon>
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="triggerOrigin"
+    [cdkConnectedOverlayOpen]="isListVisible"
+    [cdkConnectedOverlayMinWidth]="overlayWidth"
+  >
+    <ul
+      class="passenger-picker__list"
+      appBodyClick
+      (bodyClicked)="toggleListVisibility()"
+    >
+      <app-counter
+        [counter]="passengerControlValue.adult"
+        (counterChange)="onCounterChanged($event, 'adult')"
+      >
+        <div class="passenger-info__title">Adults</div>
+        <div class="passenger-info__subtitle">14+ years</div>
+      </app-counter>
+      <app-counter
+        [counter]="passengerControlValue.child"
+        (counterChange)="onCounterChanged($event, 'child')"
+      >
+        <div class="passenger-info__title">Child</div>
+        <div class="passenger-info__subtitle">2-14 years</div>
+      </app-counter>
+      <app-counter
+        [counter]="passengerControlValue.infant"
+        (counterChange)="onCounterChanged($event, 'infant')"
+      >
+        <div class="passenger-info__title">Infant</div>
+        <div class="passenger-info__subtitle">0-2 years</div>
+      </app-counter>
+    </ul>
+  </ng-template>
+</div>

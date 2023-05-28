@@ -1,0 +1,273 @@
+<app-edit
+  [searchData]="(ticketsFacade.selectGetSearch$ | async) ?? searchData"
+></app-edit>
+<div class="container">
+  <div class="booking-container header-helper">
+    <form [formGroup]="bookingForm" (submit)="onSubmit()">
+      <div class="booking-section">
+        <h2 class="booking-title">
+          <span class="passengers-icon"></span>Passengers
+        </h2>
+        <p class="booking-subtitle">
+          Enter the passenger's names as they appear on document (passport or
+          ID).
+        </p>
+
+        <ul formArrayName="passengers">
+          <li
+            class="passenger-item booking-block"
+            *ngFor="let passenger of passengers.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div>
+              <h3 class="passenger-title">
+                {{ i + 1 }}. {{ passengerList[i] | titlecase }}
+              </h3>
+              <div class="booking-form-row">
+                <div class="booking-form-cell">
+                  <mat-form-field>
+                    <mat-label>First name</mat-label>
+                    <input matInput formControlName="name" required />
+                    <button
+                      matSuffix
+                      mat-icon-button
+                      aria-label="Info"
+                      matTooltip="Add the passenger's name as it is written on their documents (passport or ID). Do not use any accents or special characters. Do not use a nickname. "
+                      matTooltipPosition="right"
+                    >
+                      <mat-icon>info</mat-icon>
+                    </button>
+                    <mat-error
+                      *ngIf="
+                        passengers.controls[i].get('name')?.invalid &&
+                        passengers.controls[i].get('name')?.touched
+                      "
+                    >
+                      <span
+                        *ngIf="passengers.controls[i].get('name')?.errors?.['required']"
+                      >
+                        Please enter a first name</span
+                      >
+                      <span
+                        *ngIf="passengers.controls[i].get('name')?.errors?.['pattern']"
+                      >
+                        First Name is invalid</span
+                      >
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="booking-form-cell">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Last name</mat-label>
+                    <input matInput formControlName="lastName" required />
+
+                    <button
+                      matSuffix
+                      mat-icon-button
+                      aria-label="Info"
+                      matTooltip="Add the passenger's name as it is written on their documents (passport or ID). Do not use any accents or special characters. Do not use a nickname. "
+                      matTooltipPosition="right"
+                    >
+                      <mat-icon>info</mat-icon>
+                    </button>
+
+                    <mat-error
+                      *ngIf="
+                        passengers.controls[i].get('lastName')?.invalid &&
+                        passengers.controls[i].get('lastName')?.touched
+                      "
+                    >
+                      <span
+                        *ngIf="passengers.controls[i].get('lastName')?.errors?.['required']"
+                      >
+                        Please enter a last name</span
+                      >
+                      <span
+                        *ngIf="passengers.controls[i].get('lastName')?.errors?.['pattern']"
+                      >
+                        Last name is invalid</span
+                      >
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="booking-form-cell">
+                  <mat-button-toggle-group formControlName="sex">
+                    <mat-button-toggle value="male">
+                      <i class="checked-icon"></i><span>Male</span>
+                    </mat-button-toggle>
+                    <mat-button-toggle value="female"
+                      ><i class="checked-icon"></i><span>Female</span>
+                    </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+
+                <div class="booking-form-cell">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Date of birth</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      formControlName="dateOfBirth"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error
+                      *ngIf="
+                        passengers.controls[i].get('dateOfBirth')?.invalid &&
+                        passengers.controls[i].get('dateOfBirth')?.touched
+                      "
+                    >
+                      <span
+                        *ngIf="passengers.controls[i].get('dateOfBirth')?.errors?.['required']"
+                      >
+                        Please enter a date of birth</span
+                      >
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div
+                  class="booking-form-cell"
+                  *ngIf="passengerList[i] !== 'infant'"
+                >
+                  <mat-form-field>
+                    <mat-label>Check-in Bags</mat-label>
+
+                    <mat-select value="Small Bag">
+                      <mat-option value="Small Bag">
+                        <span>Small Bag</span>
+                      </mat-option>
+                      <mat-option value="10kg Check-in Bag">
+                        <span>10kg Check-in Bag</span>
+                        <mat-icon>add</mat-icon>
+                        <mat-icon>remove</mat-icon>
+                      </mat-option>
+                      <mat-option value="20kg Check-in Bag">
+                        <span>20kg Check-in Bag</span>
+                        <mat-icon>add</mat-icon>
+                        <mat-icon>remove</mat-icon>
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div
+                class="booking-form-row"
+                *ngIf="passengerList[i] !== 'infant'"
+              >
+                <mat-slide-toggle formControlName="specialAssist">
+                  <span class="special-assistance"></span>Need special
+                  assistance?
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="booking-section">
+        <h2 class="booking-title">
+          <span class="contact-icon"></span>Contact details
+        </h2>
+        <p class="booking-subtitle">
+          We need contact details to be able to deliver the latest information
+          regarding your flight.
+        </p>
+        <div class="booking-block">
+          <div class="booking-form-row">
+            <div class="booking-form-cell">
+              <mat-form-field class="country-code">
+                <mat-label>Country code</mat-label>
+                <mat-select formControlName="countryCode">
+                  <mat-option
+                    *ngFor="let phone of phoneCodes"
+                    [value]="phone.dial_code"
+                  >
+                    {{ phone.name }} ({{ phone.dial_code }})
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    bookingForm.controls['countryCode'].invalid &&
+                    bookingForm.controls['countryCode'].touched
+                  "
+                >
+                  <span
+                    *ngIf="bookingForm.controls['countryCode'].errors?.['required']"
+                    >Please select a country code</span
+                  >
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="booking-form-cell">
+              <mat-form-field class="phone-number">
+                <mat-label>Mobile phone number</mat-label>
+                <input
+                  matInput
+                  placeholder="e.g. 11111111111"
+                  formControlName="phoneNumber"
+                  required
+                  type="number"
+                />
+                <mat-error
+                  *ngIf="
+                    bookingForm.controls['phoneNumber'].invalid &&
+                    bookingForm.controls['phoneNumber'].touched
+                  "
+                >
+                  <span
+                    *ngIf="bookingForm.controls['phoneNumber'].errors?.['required']"
+                    >Please enter an mobile phone number</span
+                  >
+                  <span
+                    *ngIf="bookingForm.controls['phoneNumber'].errors?.['pattern']"
+                    >Mobile phone number is invalid</span
+                  >
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="booking-form-cell">
+              <mat-form-field class="email">
+                <mat-label>Email</mat-label>
+                <input
+                  matInput
+                  placeholder="e.g. example@email.com"
+                  formControlName="email"
+                  required
+                />
+                <mat-error
+                  *ngIf="
+                    bookingForm.controls['email'].invalid &&
+                    bookingForm.controls['email'].touched
+                  "
+                >
+                  <span
+                    *ngIf="bookingForm.controls['email'].errors?.['required']"
+                    >Please enter an email</span
+                  >
+                  <span *ngIf="bookingForm.controls['email'].errors?.['email']"
+                    >Email is invalid</span
+                  >
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-buttons">
+        <button (click)="locationBack()" mat-button color="primary">
+          Back
+        </button>
+        <button mat-raised-button color="primary" type="submit">
+          Continue
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

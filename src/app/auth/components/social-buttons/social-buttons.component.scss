@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  ::ng-deep {
+    .mdc-button__label {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+  }
+}
+
+.social-button {
+  border: 1px solid #CECECE;
+  background-color: #F4F6F9;
+  color: #000;
+
+  &, &:focus {
+    box-shadow: none;
+  }
+}

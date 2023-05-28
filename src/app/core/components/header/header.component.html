@@ -1,0 +1,75 @@
+<div class="header">
+  <div class="container nav">
+    <input type="checkbox" id="nav-check" />
+    <div class="nav-header">
+      <div routerLink="/" class="logo">
+        <img src="assets/logo.png" alt="Logo" />
+      </div>
+    </div>
+    <div class="nav-btn">
+      <label for="nav-check">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+    </div>
+    <mat-horizontal-stepper
+      #stepper
+      [selectedIndex]="selectedStepIndex"
+      *ngIf="isVisionStepper"
+    >
+      <mat-step>
+        <ng-template matStepLabel>Flights</ng-template>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Passengers</ng-template>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Review & Payment</ng-template>
+      </mat-step>
+    </mat-horizontal-stepper>
+    <div class="nav-links">
+      <div class="actions">
+        <mat-form-field appearance="outline">
+          <mat-select
+            [(ngModel)]="selectedDateFormat"
+            (ngModelChange)="onDateFormatChanged()"
+          >
+            <mat-option
+              *ngFor="let dateFormat of dateFormats"
+              [value]="dateFormat"
+            >
+              {{ dateFormat }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-select
+            [value]="currencies[0]"
+            (selectionChange)="onOptionSelection($event.value)"
+          >
+            <mat-option *ngFor="let currency of currencies" [value]="currency">
+              {{ currency }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button
+          mat-stroked-button
+          (click)="signIn()"
+          *ngIf="(userData$ | async) === null"
+        >
+          <mat-icon>person</mat-icon>
+          Sign in
+        </button>
+        <div class="auth-actions" *ngIf="userData$ | async">
+          <button mat-icon-button>
+            <mat-icon>person</mat-icon>
+          </button>
+          <button mat-icon-button routerLink="/cart" *ngIf="userData$ | async">
+            <mat-icon>shopping_basket</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

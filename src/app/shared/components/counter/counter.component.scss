@@ -1,0 +1,21 @@
+.counter {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__label {
+    padding: 10px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.center {
+  width: 100%;
+  justify-content: center;
+}

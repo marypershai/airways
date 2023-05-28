@@ -1,0 +1,30 @@
+.footer {
+  padding: 36px 0;
+  font-size: 14px;
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .copy {
+    color: #11397E;
+  }
+
+  .payment {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .payment-icons {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+@media (max-width:700px) {
+  .payment, .container {
+    flex-direction: column;
+    text-align: center;
+  }
+}

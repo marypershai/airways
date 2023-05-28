@@ -1,0 +1,51 @@
+<app-edit
+  [searchData]="(ticketsFacade.selectGetSearch$ | async) ?? searchData"
+></app-edit>
+<app-ticket
+  [ticketsData]="(ticketsFacade.to$ | async) ?? []"
+  [currency]="(ticketsFacade.currency$ | async) ?? 'EUR'"
+  [image]="svgFrom"
+  [imageTimeTravel]="svgTimeFrom"
+  [searchData]="(ticketsFacade.selectGetSearch$ | async) ?? searchData"
+  [dateFrom]="
+    (ticketsFacade.selectGetDateFrom$ | async) ?? searchData.dateStart
+  "
+  (isEditClick)="onEditFrom($event)"
+  [searchFrom]="from"
+  [searchTo]="to"
+  (dataFrom)="getDataFrom($event)"
+></app-ticket>
+<app-ticket-to
+  *ngIf="way === '2'"
+  [ticketsData]="(ticketsFacade.from$ | async) ?? []"
+  [currency]="(ticketsFacade.currency$ | async) ?? 'EUR'"
+  [image]="svgTo"
+  [imageTimeTravel]="svgTimeTo"
+  [searchData]="(ticketsFacade.selectGetSearch$ | async) ?? searchData"
+  [dateFrom]="(ticketsFacade.selectGetDateTo$ | async) ?? searchData.dateStart"
+  (isEditToClick)="onEditTo($event)"
+  [searchFrom]="to"
+  [searchTo]="from"
+  (dataTo)="getDataTo($event)"
+></app-ticket-to>
+
+<div class="buttons">
+  <button
+    (click)="locationBack()"
+    mat-button
+    color="primary"
+    class="buttons__back"
+  >
+    Back
+  </button>
+  <button
+    [disabled]="isDisabledButton"
+    routerLink="/booking/details"
+    mat-raised-button
+    color="primary"
+    class="buttons__continue"
+    (click)="dispatchOnClick()"
+  >
+    Continue
+  </button>
+</div>

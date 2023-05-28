@@ -1,0 +1,161 @@
+<div class="container" *ngIf="ticketsFacade.selectGetBasket$ | async as basket">
+  <div class="booking-container header-helper">
+    <h2 class="booking-title"><span class="summary-icon"></span>Summary</h2>
+    <div class="ticket-wrap">
+      <div class="summary">
+        <div class="summary__ticket block-wrap">
+          <div class="flight-info__summary">
+            <div class="flight-info">
+              <h3 class="flight-number">
+                {{ basket.flights[0].flightCode }}
+              </h3>
+
+              <p class="flight-direction">
+                {{ basket.search.from }} —
+                {{ basket.search.to }}
+              </p>
+            </div>
+            <div class="flight-date__summary">
+              <p class="flight-date">
+                {{ basket.flights[0].date | date : "EEEE, d MMMM, y," }}
+              </p>
+              <p class="flight-time">
+                {{ basket.flights[0].departureTimeFrom }} —
+                {{ basket.flights[0].departureTimeTo }}
+              </p>
+            </div>
+          </div>
+          <ng-container
+            *ngFor="
+              let passenger of basket.passengers.passengers;
+              let i = index
+            "
+          >
+            <div class="passenger-info__summary">
+              <h4 class="passenger-name">
+                {{ passenger.name + " " + passenger.lastName }}
+              </h4>
+              <div class="passenger-info">
+                <p>1 checked bag (total 23 kg) included</p>
+                <p>1 cabin bag + 1 personal item (max. 8 kg) included</p>
+                <p>Seat {{ i + 10 }}E</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div
+          class="summary__ticket block-wrap"
+          *ngIf="basket.search.way === '2'"
+        >
+          <div class="flight-info__summary">
+            <div class="flight-info">
+              <h3 class="flight-number">
+                {{ basket.flights[1].flightCode }}
+              </h3>
+
+              <p class="flight-direction">
+                {{ basket.search.to }} —
+                {{ basket.search.from }}
+              </p>
+            </div>
+            <div class="flight-date__summary">
+              <p class="flight-date">
+                {{ basket.flights[1].date | date : "EEEE, d MMMM, y," }}
+              </p>
+              <p class="flight-time">
+                {{ basket.flights[1].departureTimeFrom }} —
+                {{ basket.flights[1].departureTimeTo }}
+              </p>
+            </div>
+          </div>
+          <ng-container
+            *ngFor="
+              let passenger of basket.passengers.passengers;
+              let i = index
+            "
+          >
+            <div class="passenger-info__summary">
+              <h4 class="passenger-name">
+                {{ passenger.name + " " + passenger.lastName }}
+              </h4>
+              <div class="passenger-info">
+                <p>1 checked bag (total 23 kg) included</p>
+                <p>1 cabin bag + 1 personal item (max. 8 kg) included</p>
+                <p>Seat {{ i + 20 }}E</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="total-block">
+        <div class="block-wrap">
+          <div class="total-info" *ngIf="basket.search.passengers.adult !== 0">
+            <div class="total-passenger">
+              <div>{{ basket.search.passengers.adult }} x Adult Fare</div>
+              <div>{{ currency }}{{ sumAdult.toFixed(2) }}</div>
+            </div>
+            <div class="total-ticket">
+              <div class="total-ticket__desc">
+                <div>Fare</div>
+                <div>{{ currency }}{{ digitAdult.toFixed(2) }}</div>
+              </div>
+              <div class="total-ticket__desc">
+                <div>Tax & Service Charge</div>
+                <div>{{ currency }}{{ taxAdult.toFixed(2) }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="total-info" *ngIf="basket.search.passengers.child !== 0">
+            <div class="total-passenger">
+              <div class="total-passenger__type">
+                <span>{{ basket.search.passengers.child }} x </span>Child Fare
+              </div>
+              <div>{{ currency }}{{ sumChild.toFixed(2) }}</div>
+            </div>
+            <div class="total-ticket">
+              <div class="total-ticket__desc">
+                <div>Fare</div>
+                <div>{{ currency }}{{ digitChild.toFixed(2) }}</div>
+              </div>
+              <div class="total-ticket__desc">
+                <div>Tax & Service Charge</div>
+                <div>{{ currency }}{{ taxChild.toFixed(2) }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="total-info" *ngIf="basket.search.passengers.infant !== 0">
+            <div class="total-passenger">
+              <div class="total-passenger__type">
+                <span>{{ basket.search.passengers.infant }} x </span>Infant Fare
+              </div>
+              <div>{{ currency }}{{ sumInfant.toFixed(2) }}</div>
+            </div>
+            <div class="total-ticket">
+              <div class="total-ticket__desc">
+                <div>Fare</div>
+                <div>{{ currency }}{{ digitInfant.toFixed(2) }}</div>
+              </div>
+              <div class="total-ticket__desc">
+                <div>Tax & Service Charge</div>
+                <div>{{ currency }}{{ taxInfant.toFixed(2) }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="total-sum">
+            <p class="total-sum-text">Total:</p>
+            <p class="total-sum-number">
+              {{ currency }}{{ totalSum.toFixed(2) }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="booking-buttons">
+      <button mat-button color="primary" (click)="locationBack()">Back</button>
+      <button mat-stroked-button color="primary">Add to order card</button>
+      <button mat-raised-button color="primary" (click)="confirmPurchase()">
+        Buy now
+      </button>
+    </div>
+  </div>
+</div>

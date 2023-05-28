@@ -1,0 +1,15 @@
+<div class="auth-wrapper">
+  <mat-tab-group
+    animationDuration="0ms"
+    dynamicHeight
+    [selectedIndex]="authService.selectedTabIndex$ | async"
+    (selectedIndexChange)="onTabSelectionChanged($event)"
+  >
+    <mat-tab label="Login">
+      <app-login></app-login>
+    </mat-tab>
+    <mat-tab label="Sign Up">
+      <app-signup></app-signup>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,8 @@
+.destination-info {
+  display: flex;
+  gap: 8px;
+
+  & > * {
+    flex: 1;
+  }
+}
